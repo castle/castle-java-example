@@ -7,18 +7,6 @@ Prerequisites
 
 * Maven
 * Java 7+
-* castle-java added to your local Maven repository (see below)
-
-Building castle-java
-====================
-
-Download the code from: https://github.com/castle/castle-java.
-
-Build it with:
-
-```
-$ mvn clean install
-```
 
 Running the code
 ================
