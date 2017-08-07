@@ -16,7 +16,7 @@ Set environment variables `CASTLE_API_SECRET` and `CASTLE_APP_ID`.
 Run the web server with:
 
 ```
-$ mvn tomcat7:run
+$ mvn jetty:run
 ```
 
 Navigate to:
