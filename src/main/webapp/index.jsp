@@ -9,5 +9,8 @@
 <form action="login" method="post">
     <input type="submit" value="Login"/>
 </form>
+<form action="/login_error" method="post">
+    <input type="submit" value="Login-failure"/>
+</form>
 </body>
 </html>
