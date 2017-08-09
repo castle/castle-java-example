@@ -1,4 +1,4 @@
-package io.castle.example;
+package io.castle.example.utils;
 
 public class Config {
 

@@ -9,7 +9,7 @@
 </head>
 <body>
 <h2>Error! Please try to log-in again.</h2>
-<form action="/index.jsp" method="post">
+<form action="/index.jsp" method="get">
     <input type="submit" value="Home"/>
 </form>
 </body>
