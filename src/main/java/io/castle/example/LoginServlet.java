@@ -21,10 +21,10 @@ public class LoginServlet extends HttpServlet {
 //            return AuthenticateAction.DENY;
 //        }
 
-        @Override
-        public AuthenticateAction authenticate(String event, String userId) {
-            return AuthenticateAction.CHALLENGE;
-        }
+//        @Override
+//        public AuthenticateAction authenticate(String event, String userId) {
+//            return AuthenticateAction.CHALLENGE;
+//        }
     };
 
     @Override
@@ -61,7 +61,7 @@ public class LoginServlet extends HttpServlet {
             }
         } else {
             session.invalidate();
-            resp.sendRedirect("login_error");
+            resp.sendRedirect("authentication_error.jsp");
         }
     }
 }
