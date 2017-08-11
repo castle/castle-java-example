@@ -1,9 +1,13 @@
 package io.castle.example;
 
+import io.castle.client.Castle;
+import io.castle.client.api.CastleApi;
 import io.castle.client.api.CastleApiImpl;
 import io.castle.client.model.AuthenticateAction;
-import io.castle.example.utils.UsersModel;
+import io.castle.example.model.TestUser;
+import io.castle.example.model.UserAuthenticationBackend;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
@@ -12,54 +16,43 @@ import java.io.IOException;
 @WebServlet("/login")
 public class LoginServlet extends HttpServlet {
 
-    private CastleApiImpl castleApi = new CastleApiImpl() {
-
-        // While there is no CastleApiImpl implementation, uncomment to test redirect to deny and challenge endpoints
-
-//        @Override
-//        public AuthenticateAction authenticate(String event, String userId) {
-//            return AuthenticateAction.DENY;
-//        }
-
-//        @Override
-//        public AuthenticateAction authenticate(String event, String userId) {
-//            return AuthenticateAction.CHALLENGE;
-//        }
-    };
+    private final UserAuthenticationBackend authenticationBackend = new UserAuthenticationBackend();
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        CastleApi castleApi = Castle.sdk().onRequest(req);
 
-        UsersModel model = new UsersModel();
-        String user = req.getParameter("username");
+        String username = req.getParameter("username");
         String password = req.getParameter("password");
 
         HttpSession session = req.getSession(true);
 
-        if (model.users.containsKey(user) && model.users.get(user).equals(password)) {
-            AuthenticateAction authenticateAction = castleApi.authenticate("$login.succeeded", "1234");
-
+        TestUser user = authenticationBackend.findUser(username);
+        if (user != null && user.getPassword().compareTo(password) == 0) {
+            AuthenticateAction authenticateAction = castleApi.authenticate("$login.succeeded", user.getLogin());
             switch (authenticateAction) {
                 case DENY: {
-                    castleApi.track("$login.failed", "1234", "{\"email\": \"johan@castle.io\"}");
+                    //TODO not sure if we should track anything here.
+                    castleApi.track("$login.failed", user.getLogin(), user);
                     session.invalidate();
                     resp.sendRedirect("authentication_error.jsp");
                 }
                 break;
                 case ALLOW: {
-                    castleApi.track("$login.succeeded", "1234");
+                    castleApi.track("$login.succeeded", user.getLogin());
                     session.setAttribute("currentSessionUser", user);
-                    resp.sendRedirect("authenticated.jsp");
+                    resp.sendRedirect("/");
                 }
                 break;
                 case CHALLENGE: {
-                    castleApi.track("$challenge.requested", "1234", "{\"email\": \"johan@castle.io\"}");
+                    castleApi.track("$challenge.requested", user.getLogin(), user);
                     session.setAttribute("challengedUser", user);
                     resp.sendRedirect("challenge.jsp");
                 }
                 break;
             }
         } else {
+            castleApi.track("$login.failed", username);
             session.invalidate();
             resp.sendRedirect("authentication_error.jsp");
         }

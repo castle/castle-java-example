@@ -22,8 +22,8 @@ public class ChallengeSuccessServlet extends HttpServlet {
             resp.sendRedirect("authentication_error.jsp");
         } else {
             castleApi.track("$challenge.succeeded", "1234", "{\"email\": \"johan@castle.io\"}");
-            Object user = session.getAttribute("challengedUser");
-            session.setAttribute("currentSessionUser", user);
+//            Object user = session.getAttribute("challengedUser");
+//            session.setAttribute("currentSessionUser", user);
             session.removeAttribute("challengedUser");
             resp.sendRedirect("authenticated.jsp");
         }
