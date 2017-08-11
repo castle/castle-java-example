@@ -7,7 +7,6 @@ import io.castle.client.model.AuthenticateAction;
 import io.castle.example.model.TestUser;
 import io.castle.example.model.UserAuthenticationBackend;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
@@ -29,23 +28,24 @@ public class LoginServlet extends HttpServlet {
 
         TestUser user = authenticationBackend.findUser(username);
         if (user != null && user.getPassword().compareTo(password) == 0) {
-            AuthenticateAction authenticateAction = castleApi.authenticate("$login.succeeded", user.getLogin());
+            String login = user.getLogin();
+            AuthenticateAction authenticateAction = castleApi.authenticate("$login.succeeded", login);
             switch (authenticateAction) {
                 case DENY: {
                     //TODO not sure if we should track anything here.
-                    castleApi.track("$login.failed", user.getLogin(), user);
+                    castleApi.track("$login.failed", login, user);
                     session.invalidate();
                     resp.sendRedirect("authentication_error.jsp");
                 }
                 break;
                 case ALLOW: {
-                    castleApi.track("$login.succeeded", user.getLogin());
+                    castleApi.track("$login.succeeded", login);
                     session.setAttribute("currentSessionUser", user);
                     resp.sendRedirect("/");
                 }
                 break;
                 case CHALLENGE: {
-                    castleApi.track("$challenge.requested", user.getLogin(), user);
+                    castleApi.track("$challenge.requested", login, user);
                     session.setAttribute("challengedUser", user);
                     resp.sendRedirect("challenge.jsp");
                 }

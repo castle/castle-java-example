@@ -10,16 +10,16 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-
-@WebServlet("/challenge_failed")
-public class ChallengeFailureServlet extends HttpServlet {
+@WebServlet("/logout")
+public class LogoutServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         CastleApi castleApi = Castle.sdk().onRequest(req);
-        castleApi.track("$challenge.failed", "1234", "{\"email\": \"johan@castle.io\"}");
-        HttpSession session = req.getSession();
+        HttpSession session = req.getSession(true);
+        //Notice that this is a custom event.
+        castleApi.track("logout","1234", "{\"my_critical_property\": \"52\"}");
         session.invalidate();
-        resp.sendRedirect("authentication_error.jsp");
+        resp.sendRedirect("logout_success.jsp");
     }
 }

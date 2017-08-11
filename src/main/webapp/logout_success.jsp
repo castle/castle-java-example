@@ -5,7 +5,7 @@
     </script>
 </head>
 <body>
-<h2>Error! Please try to log-in again.</h2>
+<h2>You have been logged-out successfully!</h2>
 <form action="/index.jsp" method="get">
     <input type="submit" value="Home"/>
 </form>
