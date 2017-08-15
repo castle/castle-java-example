@@ -2,6 +2,8 @@ package io.castle.example;
 
 import io.castle.client.Castle;
 import io.castle.client.api.CastleApi;
+import io.castle.example.model.CustomProperties;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -18,7 +20,9 @@ public class LogoutServlet extends HttpServlet {
         CastleApi castleApi = Castle.sdk().onRequest(req);
         HttpSession session = req.getSession(true);
         //Notice that this is a custom event.
-        castleApi.track("logout","1234", "{\"my_critical_property\": \"52\"}");
+        CustomProperties customExample = new CustomProperties();
+        customExample.setExampleValue("valueToSend");
+        castleApi.track("logout","1234", customExample);
         session.invalidate();
         resp.sendRedirect("logout_success.jsp");
     }
