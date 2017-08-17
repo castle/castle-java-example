@@ -2,6 +2,10 @@ package io.castle.example;
 
 import io.castle.client.Castle;
 import io.castle.client.api.CastleApi;
+import io.castle.client.api.CastleApiImpl;
+import io.castle.client.internal.config.CastleConfiguration;
+import io.castle.client.internal.config.CastleConfigurationBuilder;
+import io.castle.client.internal.config.CastleSdkInternalConfiguration;
 import io.castle.client.internal.model.AuthenticateAction;
 import io.castle.example.model.TestUser;
 import io.castle.example.model.UserAuthenticationBackend;
@@ -17,18 +21,15 @@ import java.io.IOException;
 @WebServlet("/login")
 public class LoginServlet extends HttpServlet {
 
-    private final UserAuthenticationBackend authenticationBackend = new UserAuthenticationBackend();
-
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         CastleApi castleApi = Castle.sdk().onRequest(req);
-
         String username = req.getParameter("username");
         String password = req.getParameter("password");
 
         HttpSession session = req.getSession(true);
 
-        TestUser user = authenticationBackend.findUser(username);
+        TestUser user = UserAuthenticationBackend.findUser(username);
         if (user != null && user.getPassword().compareTo(password) == 0) {
             String login = user.getLogin();
             AuthenticateAction authenticateAction = castleApi.authenticate("$login.succeeded", login);

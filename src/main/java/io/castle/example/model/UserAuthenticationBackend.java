@@ -5,23 +5,20 @@ import java.util.Map;
 
 public class UserAuthenticationBackend {
 
-    Map<String,TestUser> testUsersByLogin;
+    static Map<String, TestUser> testUsersByLogin = new HashMap<String, TestUser>() {
+        {
+            TestUser admin = new TestUser("admin@example.com", "admin", "admin");
+            TestUser josh = new TestUser("josh@example.com", "anyPassword", "Josh");
+            put(admin.getLogin(), admin);
+            put(josh.getLogin(), josh);
+        }
+    };
 
-    public UserAuthenticationBackend() {
-        this.testUsersByLogin = new HashMap<String, TestUser>();
-        initTestUsers();
+    static void addUser(TestUser user) {
+        testUsersByLogin.put(user.getLogin(), user);
     }
 
-    private void initTestUsers() {
-        addUser(new TestUser("admin@example.com","admin", "admin"));
-        addUser(new TestUser("josh@example.com","anyPassword", "Josh"));
-    }
-
-    private void addUser(TestUser user) {
-        this.testUsersByLogin.put(user.getLogin(),user);
-    }
-
-    public TestUser findUser(String userLogin) {
+    public static TestUser findUser(String userLogin) {
         return testUsersByLogin.get(userLogin);
     }
 

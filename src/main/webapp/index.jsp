@@ -1,6 +1,6 @@
 <jsp:useBean id="currentSessionUser" class="io.castle.example.model.TestUser" scope="session"></jsp:useBean>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<c:set var = "currentUser" value = "${currentSessionUser.getLogin()}"/>
+<c:set var="currentUser" value="${currentSessionUser.getLogin()}"/>
 <c:choose>
     <c:when test="${currentUser != null }">
         <html>
@@ -11,6 +11,7 @@
                     id: '<c:out value = "${currentUser}"/>'
                 });
             </script>
+            <title>Home</title>
         </head>
         <body>
         <h2>Welcome to Castle World</h2>
@@ -19,8 +20,15 @@
             <c:out value="${currentSessionUser.getUsername()}"/>
             </p>
         </div>
+        </div>
+        <div>
+            <a href="account_details.jsp">Edit account details</a>
+        </div>
         <form action="logout" method="post">
-        <input type="submit" value="Logout"/>
+            <input type="submit" value="Logout"/>
+        </form>
+        </body>
+        </html>
     </c:when>
     <c:otherwise>
         <html>
@@ -28,6 +36,7 @@
             <script type="text/javascript">
                 <jsp:include page="_castle_script.jsp"/>
             </script>
+            <title>Home</title>
         </head>
         <body>
         <h2>Welcome to Castle World</h2>
@@ -52,6 +61,9 @@
             </div>
         </form>
         <div>
+            <a href="forgot_password.jsp">Forgot your password?</a>
+        </div>
+        <div>
             <h2>Test data</h2>
             <p>The example application contains a built-in list of users with the logins:</p>
             <ul>
@@ -59,7 +71,8 @@
                 <li>josh@example.com:anyPassword</li>
             </ul>
         </div>
+        </body>
+        </html>
     </c:otherwise>
 </c:choose>
-</body>
-</html>
+
