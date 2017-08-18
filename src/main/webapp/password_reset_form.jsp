@@ -1,6 +1,6 @@
 <jsp:useBean id="currentSessionUser" class="io.castle.example.model.TestUser" scope="session"></jsp:useBean>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<c:set var="currentUser" value="${passwordResetUser.getLogin()}"/>
+<c:set var="currentUser" value="${passwordResetUser.getId()}"/>
 <c:choose>
     <c:when test="${currentUser != null }">
         <html>

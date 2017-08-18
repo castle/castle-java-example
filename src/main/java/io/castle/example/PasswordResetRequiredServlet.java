@@ -25,11 +25,10 @@ public class PasswordResetRequiredServlet extends HttpServlet {
         String login = req.getParameter("login");
         TestUser user = UserAuthenticationBackend.findUser(login);
         if (user != null) {
-            castleApi.track("$password_reset_request.succeeded", user.getLogin());
+            castleApi.track("$password_reset_request.succeeded", user.getId().toString());
             session.setAttribute("passwordResetUser", user);
             resp.sendRedirect("password_reset_request_succeeded.jsp");
         } else {
-            //Todo: NullPointerException in OKHttp backend
             castleApi.track("$password_reset_request.failed");
             session.invalidate();
             resp.sendRedirect("password_reset_request_error.jsp");

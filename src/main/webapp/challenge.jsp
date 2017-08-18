@@ -1,7 +1,7 @@
 <%@ page import="java.io.IOException" %>
 <jsp:useBean id="challengedUser" class="io.castle.example.model.TestUser" scope="session"></jsp:useBean>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<c:set var="currentUser" value="${challengedUser.getLogin()}"/>
+<c:set var="currentUser" value="${challengedUser.getId()}"/>
 <html>
 <head>
     <script type="text/javascript">

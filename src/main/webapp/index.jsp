@@ -1,6 +1,6 @@
 <jsp:useBean id="currentSessionUser" class="io.castle.example.model.TestUser" scope="session"></jsp:useBean>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<c:set var="currentUser" value="${currentSessionUser.getLogin()}"/>
+<c:set var="currentUser" value="${currentSessionUser.getId()}"/>
 <c:choose>
     <c:when test="${currentUser != null }">
         <html>
@@ -16,17 +16,21 @@
         <body>
         <h2>Welcome to Castle World</h2>
         <div>
-            <h3>Logged-in user:</h3>
-            <c:out value="${currentSessionUser.getUsername()}"/>
+            <h3>These are your account details:</h3>
+            id: <c:out value="${currentUser}"/><br>
+            Login: <c:out value="${currentSessionUser.getLogin()}"/> <a href="email_change_form.jsp">Change</a><br>
+            Name: <c:out value="${currentSessionUser.getUsername()}"/><br>
+            Lastname: <c:out value="${currentSessionUser.getLastname()}"/><br>
             </p>
         </div>
+        <div>
+            <a href="password_change_form.jsp">Change your password</a>
         </div>
         <div>
-            <a href="account_details.jsp">Edit account details</a>
+            <form action="logout" method="post">
+                <input type="submit" value="Logout"/>
+            </form>
         </div>
-        <form action="logout" method="post">
-            <input type="submit" value="Logout"/>
-        </form>
         </body>
         </html>
     </c:when>
@@ -65,7 +69,7 @@
         </div>
         <div>
             <h2>Test data</h2>
-            <p>The example application contains a built-in list of users with the logins:</p>
+            <p>The example application contains a built-in list of users with the following logins:</p>
             <ul>
                 <li>admin@example.com:admin</li>
                 <li>josh@example.com:anyPassword</li>

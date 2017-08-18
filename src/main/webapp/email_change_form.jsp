@@ -1,6 +1,6 @@
 <jsp:useBean id="currentSessionUser" class="io.castle.example.model.TestUser" scope="session"></jsp:useBean>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<c:set var="currentUser" value="${currentSessionUser.getLogin()}"/>
+<c:set var="currentUser" value="${currentSessionUser.getId()}"/>
 <c:choose>
     <c:when test="${currentUser != null }">
         <html>
@@ -11,16 +11,17 @@
                     id: '<c:out value = "${currentUser}"/>'
                 });
             </script>
-            <title>Change Your Email</title>
+            <title>Update Your Email Account</title>
         </head>
         <body>
-        <h2>Change your Email</h2>
-        <form action="/email_change" method="POST">
+        <h2>Update your email account</h2>
+        <form action="/email_change_request" method="POST">
+            <div>Select a new email address to associate with your account.</div>
             <div>
                 <div class="input-prepend input-block-level">
                     <span class="add-on"><i class="icon-user"></i></span>
                     <input type="text" placeholder="Email" autocorrect="off" autocapitalize="off" autocomplete="off"
-                           value="<c:out value = "${currentUser}"/>"
+                           value="<c:out value = "${currentSessionUser.getLogin()}"/>"
                            spellcheck="false" id="j_username" name="username">
                 </div>
             </div>

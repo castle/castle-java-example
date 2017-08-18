@@ -2,10 +2,6 @@ package io.castle.example;
 
 import io.castle.client.Castle;
 import io.castle.client.api.CastleApi;
-import io.castle.client.api.CastleApiImpl;
-import io.castle.client.internal.config.CastleConfiguration;
-import io.castle.client.internal.config.CastleConfigurationBuilder;
-import io.castle.client.internal.config.CastleSdkInternalConfiguration;
 import io.castle.client.internal.model.AuthenticateAction;
 import io.castle.example.model.TestUser;
 import io.castle.example.model.UserAuthenticationBackend;
@@ -31,31 +27,35 @@ public class LoginServlet extends HttpServlet {
 
         TestUser user = UserAuthenticationBackend.findUser(username);
         if (user != null && user.getPassword().compareTo(password) == 0) {
-            String login = user.getLogin();
-            AuthenticateAction authenticateAction = castleApi.authenticate("$login.succeeded", login);
+            String id = user.getId().toString();
+            AuthenticateAction authenticateAction = castleApi.authenticate("$login.succeeded", id);
             switch (authenticateAction) {
                 case DENY: {
                     //TODO not sure if we should track anything here.
-                    castleApi.track("$login.failed", login, user);
+                    castleApi.track("$login.failed", id, user);
                     session.invalidate();
                     resp.sendRedirect("authentication_error.jsp");
                 }
                 break;
                 case ALLOW: {
-                    castleApi.track("$login.succeeded", login);
+                    castleApi.track("$login.succeeded", id);
                     session.setAttribute("currentSessionUser", user);
                     resp.sendRedirect("/");
                 }
                 break;
                 case CHALLENGE: {
-                    castleApi.track("$challenge.requested", login, user);
+                    castleApi.track("$challenge.requested", id, user);
                     session.setAttribute("challengedUser", user);
                     resp.sendRedirect("challenge.jsp");
                 }
                 break;
             }
         } else {
-            castleApi.track("$login.failed", username);
+            if (user != null){
+                castleApi.track("$login.failed", user.getId().toString());
+            } else {
+                castleApi.track("$login.failed");
+            }
             session.invalidate();
             resp.sendRedirect("authentication_error.jsp");
         }
