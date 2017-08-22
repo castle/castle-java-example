@@ -6,10 +6,13 @@ import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
 public class SetupListener implements ServletContextListener {
+
+    /**
+     * Example of how to verify the SDK configuratino during application initialization to avoid errors during request handling.
+     * @param sce
+     */
     public void contextInitialized(ServletContextEvent sce) {
-        //Verify that the castle SDK configuration is loaded correctly
-        //TODO now we have a exception, create a verify method with a setup problem report.
-        Castle.sdk();
+        Castle.verifySdkConfiguration();
     }
 
     public void contextDestroyed(ServletContextEvent sce) {
