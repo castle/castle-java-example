@@ -2,7 +2,7 @@ package io.castle.example;
 
 import io.castle.client.Castle;
 import io.castle.client.api.CastleApi;
-import io.castle.client.internal.model.AuthenticateAction;
+import io.castle.client.model.AuthenticateAction;
 import io.castle.example.model.TestUser;
 import io.castle.example.model.UserAuthenticationBackend;
 
