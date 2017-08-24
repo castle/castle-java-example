@@ -44,7 +44,7 @@
         </head>
         <body>
         <h2>Welcome to Castle World</h2>
-        <form action="login" method="POST">
+        <form action="login" method="post">
             <div>
                 <div class="input-prepend input-block-level">
                     <span class="add-on"><i class="icon-user"></i></span>
@@ -61,7 +61,9 @@
                 </div>
             </div>
             <div>
-                <input type="submit" class="btn" value="Login" name="submit">
+                <button value=>Standard login</button><br>
+                <button name="override" value="challenge">Force login with challenge</button><br>
+                <button name="override" value="deny">Force login with deny</button>
             </div>
         </form>
         <div>

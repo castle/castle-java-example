@@ -15,7 +15,7 @@
         </head>
         <body>
         <h2>Reset your password</h2>
-        <form action="/password_reset" method="POST">
+        <form id="j_password_reset">
             <div>
                 <div class="input-prepend input-block-level">
                     <span class="add-on"><i class="icon-user"></i></span>
@@ -33,10 +33,14 @@
                 </div>
             </div>
             <div>
-                <input type="submit" class="btn" value="Submit" name="submit">
-                <input type="hidden" name="password_reset" value="true"/>
+                <button formaction="/password_reset" formmethod="post" name="password_reset"value="true">Submit</button>
             </div>
         </form>
+        <div>
+            <form action="/" method="get">
+                <button>Cancel</button>
+            </form>
+        </div>
         </body>
         </html>
     </c:when>

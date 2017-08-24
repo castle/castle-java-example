@@ -11,11 +11,11 @@ Prerequisites
 Running the code
 ================
 
-Set environment variables `CASTLE_SDK_API_SECRET` and `CASTLE_APP_ID`.
+Set environment variables `CASTLE_SDK_API_SECRET` and `CASTLE_SDK_APP_ID`.
 
 ```
 export CASTLE_SDK_API_SECRET=....
-export CASTLE_APP_ID=...
+export CASTLE_SDK_APP_ID=...
 ```
 
 Run the web server with:

@@ -13,18 +13,29 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.logging.Logger;
 
 @WebServlet("/login")
 public class LoginServlet extends HttpServlet {
+
+    private static final Logger LOGGER = Logger.getLogger( LoginServlet.class.getName());
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         CastleApi castleApi = Castle.sdk().onRequest(req);
 
+        String overrideString = req.getParameter("override");
         AuthenticateAction override = null;
+
+        if (overrideString !=null && overrideString.equals("challenge")) {
+            override = AuthenticateAction.CHALLENGE;
+        } else if (overrideString !=null && overrideString.equals("deny")) {
+            override = AuthenticateAction.DENY;
+        }
+
         //TODO check params
 
-        castleApi.track("adf","asdf");
+        castleApi.track("adf", "asdf");
 
         String username = req.getParameter("username");
         String password = req.getParameter("password");
@@ -32,12 +43,18 @@ public class LoginServlet extends HttpServlet {
         HttpSession session = req.getSession(true);
 
         TestUser user = UserAuthenticationBackend.findUser(username);
-        if (user != null && user.getPassword().compareTo(password) == 0) {
+        if (user != null && user.getPassword().
+
+                compareTo(password) == 0)
+
+        {
             String id = user.getId().toString();
             AuthenticateAction authenticateAction = castleApi.authenticate("$login.succeeded", id);
-            if( override != null ) {
-                //TODO add logger to inform about override
+            if (override != null) {
+
                 authenticateAction = override;
+                LOGGER.info("The result of the Castle API authenticate call has been overridden to: "
+                        + override.toString());
             }
             switch (authenticateAction) {
                 case DENY: {
@@ -60,8 +77,10 @@ public class LoginServlet extends HttpServlet {
                 }
                 break;
             }
-        } else {
-            if (user != null){
+        } else
+
+        {
+            if (user != null) {
                 castleApi.track("$login.failed", user.getId().toString());
             } else {
                 castleApi.track("$login.failed");

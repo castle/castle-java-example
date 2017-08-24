@@ -10,7 +10,7 @@
 <h2>We have sent you an email with details for resetting your password. Did you receive it?</h2>
 
 <form id="j_password_reset">
-    <button name="password_reset" formaction="/password_reset_form.jsp" formmethod="get" type="submit" value=>Yes, and I confirm I have control over that email account.</button><br>
+    <button formaction="/password_reset_form.jsp" formmethod="get" type="submit" value=>Yes, and I confirm I have control over that email account.</button><br>
     <button name="password_reset" formaction="/password_reset" formmethod="post" type="submit" value=false>Something is wrong. I did not request a password reset.</button>
 </form>
 
