@@ -25,12 +25,12 @@ public class ChallengeServlet extends HttpServlet {
             TestUser challengedUser = (TestUser) challengedUserObject;
             String userId = challengedUser.getId().toString();
             if (isChallengeSucceeded) {
-                castleApi.track("$challenge.succeeded", userId, "{\"email\": \"johan@castle.io\"}");
+                castleApi.track("$challenge.succeeded", userId);
                 session.setAttribute("currentSessionUser", challengedUserObject);
                 session.removeAttribute("challengedUser");
                 resp.sendRedirect("/");
             } else {
-                castleApi.track("$challenge.failed", userId, "{\"email\": \"johan@castle.io\"}");
+                castleApi.track("$challenge.failed", userId);
                 session.invalidate();
                 resp.sendRedirect("authentication_error.jsp");
             }

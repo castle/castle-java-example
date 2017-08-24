@@ -20,6 +20,12 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         CastleApi castleApi = Castle.sdk().onRequest(req);
+
+        AuthenticateAction override = null;
+        //TODO check params
+
+        castleApi.track("adf","asdf");
+
         String username = req.getParameter("username");
         String password = req.getParameter("password");
 
@@ -29,6 +35,10 @@ public class LoginServlet extends HttpServlet {
         if (user != null && user.getPassword().compareTo(password) == 0) {
             String id = user.getId().toString();
             AuthenticateAction authenticateAction = castleApi.authenticate("$login.succeeded", id);
+            if( override != null ) {
+                //TODO add logger to inform about override
+                authenticateAction = override;
+            }
             switch (authenticateAction) {
                 case DENY: {
                     //TODO not sure if we should track anything here.

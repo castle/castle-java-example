@@ -43,7 +43,7 @@ public class PasswordResetServlet extends HttpServlet {
             } else {
                 castleApi.track("$password_reset.failed", userId);
                 session.invalidate();
-                resp.sendRedirect("/");
+                resp.sendRedirect("authentication_error.jsp");
             }
         } else {
             session.invalidate();

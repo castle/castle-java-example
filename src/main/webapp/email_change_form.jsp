@@ -39,8 +39,9 @@
             </div>
         </form>
         <div>
-            <form action="logout" method="post">
-                <input type="submit" value="Logout"/>
+            <form method="post">
+                <button formaction="/">Cancel</button>
+                <button formaction="logout">Logout</button>
             </form>
         </div>
         </body>

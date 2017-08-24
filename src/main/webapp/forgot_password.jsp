@@ -17,5 +17,10 @@
         </div>
     </div>
 </form>
+<div>
+    <form method="post">
+        <button formaction="/">Cancel</button>
+    </form>
+</div>
 </body>
 </html>

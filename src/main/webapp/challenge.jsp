@@ -14,13 +14,11 @@
 </head>
 <body>
 <h2>This is a page for the challenge. Please choose the correct button.</h2>
-<form action="challenge" method="post">
-    <input type="submit" value="Challenge-succeed"/>
-    <input type="hidden" name="is_challenge_succeeded" value="true">
+
+<form action="/challenge" method="post" id="j_challenge">
+    <button name="is_challenge_succeeded" type="submit" value=true>Challenge-succeed</button>
+    <button name="is_challenge_succeeded" type="submit" value=false>Challenge-fail</button>
 </form>
-<form action="challenge" method="post">
-    <input type="submit" value="Challenge-fail"/>
-    <input type="hidden" name="is_challenge_succeeded" value="false">
-</form>
+
 </body>
 </html>
