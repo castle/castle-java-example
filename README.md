@@ -26,4 +26,4 @@ $ mvn jetty:run
 
 Navigate to:
 
-http://localhost:8080/castle-example/
+http://localhost:8080/
