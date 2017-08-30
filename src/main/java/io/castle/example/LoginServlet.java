@@ -3,6 +3,7 @@ package io.castle.example;
 import io.castle.client.Castle;
 import io.castle.client.api.CastleApi;
 import io.castle.client.model.AuthenticateAction;
+import io.castle.client.model.Verdict;
 import io.castle.example.model.TestUser;
 import io.castle.example.model.UserAuthenticationBackend;
 
@@ -18,7 +19,7 @@ import java.util.logging.Logger;
 @WebServlet("/login")
 public class LoginServlet extends HttpServlet {
 
-    private static final Logger LOGGER = Logger.getLogger( LoginServlet.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(LoginServlet.class.getName());
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -27,9 +28,9 @@ public class LoginServlet extends HttpServlet {
         String overrideString = req.getParameter("override");
         AuthenticateAction override = null;
 
-        if (overrideString !=null && overrideString.equals("challenge")) {
+        if (overrideString != null && overrideString.equals("challenge")) {
             override = AuthenticateAction.CHALLENGE;
-        } else if (overrideString !=null && overrideString.equals("deny")) {
+        } else if (overrideString != null && overrideString.equals("deny")) {
             override = AuthenticateAction.DENY;
         }
 
@@ -43,20 +44,15 @@ public class LoginServlet extends HttpServlet {
         HttpSession session = req.getSession(true);
 
         TestUser user = UserAuthenticationBackend.findUser(username);
-        if (user != null && user.getPassword().
-
-                compareTo(password) == 0)
-
-        {
+        if (user != null && user.getPassword().compareTo(password) == 0) {
             String id = user.getId().toString();
-            AuthenticateAction authenticateAction = castleApi.authenticate("$login.succeeded", id);
+            Verdict verdict = castleApi.authenticate("$login.succeeded", id);
             if (override != null) {
-
-                authenticateAction = override;
+                verdict.setAction(override);
                 LOGGER.info("The result of the Castle API authenticate call has been overridden to: "
                         + override.toString());
             }
-            switch (authenticateAction) {
+            switch (verdict.getAction()) {
                 case DENY: {
                     //TODO not sure if we should track anything here.
                     castleApi.track("$login.failed", id, user);
