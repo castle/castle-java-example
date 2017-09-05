@@ -1,3 +1,4 @@
+<%@ page import="io.castle.client.Castle" %>
 <jsp:useBean id="currentSessionUser" class="io.castle.example.model.TestUser" scope="session"></jsp:useBean>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <c:set var="currentUser" value="${currentSessionUser.getId()}"/>
@@ -10,6 +11,8 @@
                 _castle('setUser', {
                     id: '<c:out value = "${currentUser}"/>'
                 });
+                _castle('secure',
+                    '<%= Castle.sdk().secureUserID(currentSessionUser.getId().toString()) %>');
             </script>
             <title>Update Your Email Account</title>
         </head>

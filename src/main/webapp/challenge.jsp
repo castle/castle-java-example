@@ -1,4 +1,5 @@
 <%@ page import="java.io.IOException" %>
+<%@ page import="io.castle.client.Castle" %>
 <jsp:useBean id="challengedUser" class="io.castle.example.model.TestUser" scope="session"></jsp:useBean>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <c:set var="currentUser" value="${challengedUser.getId()}"/>
@@ -9,6 +10,8 @@
         _castle('setUser', {
             id: '<c:out value = "${currentUser}"/>'
         });
+        _castle('secure',
+            '<%= Castle.sdk().secureUserID(challengedUser.getId().toString()) %>');
     </script>
     <title>Authentication Challenge</title>
 </head>
