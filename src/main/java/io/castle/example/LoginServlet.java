@@ -34,10 +34,6 @@ public class LoginServlet extends HttpServlet {
             override = AuthenticateAction.DENY;
         }
 
-        //TODO check params
-
-        castleApi.track("adf", "asdf");
-
         String username = req.getParameter("username");
         String password = req.getParameter("password");
 
@@ -54,7 +50,6 @@ public class LoginServlet extends HttpServlet {
             }
             switch (verdict.getAction()) {
                 case DENY: {
-                    //TODO not sure if we should track anything here.
                     castleApi.track("$login.failed", id, user);
                     session.invalidate();
                     resp.sendRedirect("authentication_error.jsp");

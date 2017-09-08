@@ -8,9 +8,11 @@
         <head>
             <script type="text/javascript">
                 <jsp:include page="_castle_script.jsp"/>
+//                secure mode off
                 _castle('setUser', {
                     id: '<c:out value = "${currentUser}"/>'
                 });
+//                secure mode on
                 _castle('secure',
                     '<%= Castle.sdk().secureUserID(currentSessionUser.getId().toString()) %>');
             </script>
