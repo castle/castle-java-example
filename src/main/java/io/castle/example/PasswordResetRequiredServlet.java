@@ -2,6 +2,7 @@ package io.castle.example;
 
 import io.castle.client.Castle;
 import io.castle.client.api.CastleApi;
+import io.castle.example.model.EmailProperties;
 import io.castle.example.model.TestUser;
 import io.castle.example.model.UserAuthenticationBackend;
 
@@ -24,12 +25,23 @@ public class PasswordResetRequiredServlet extends HttpServlet {
         CastleApi castleApi = Castle.sdk().onRequest(req);
         String login = req.getParameter("login");
         TestUser user = UserAuthenticationBackend.findUser(login);
+        EmailProperties email = new EmailProperties();
         if (user != null) {
-            castleApi.track("$password_reset_request.succeeded", user.getId().toString());
+            email.setEmail(user.getLogin());
+            castleApi.track(
+                    "$password_reset_request.succeeded",
+                    user.getId().toString(),
+                    email
+            );
             session.setAttribute("passwordResetUser", user);
             resp.sendRedirect("password_reset_request_succeeded.jsp");
         } else {
-            castleApi.track("$password_reset_request.failed");
+            email.setEmail(login);
+            castleApi.track(
+                    "$password_reset_request.failed",
+                    null,
+                    email
+                    );
             session.invalidate();
             resp.sendRedirect("password_reset_request_error.jsp");
         }

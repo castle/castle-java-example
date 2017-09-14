@@ -22,10 +22,9 @@ public class LogoutServlet extends HttpServlet {
         Object userObject = session.getAttribute("currentSessionUser");
         TestUser user = (TestUser) userObject;
 
-        //Notice that this is a custom event.
         CustomProperties customExample = new CustomProperties();
         customExample.setExampleValue("valueToSend");
-        castleApi.track("logout", user.getId().toString(), customExample);
+        castleApi.track("$logout.succeeded", user.getId().toString(), customExample);
         session.invalidate();
         resp.sendRedirect("logout_success.jsp");
     }

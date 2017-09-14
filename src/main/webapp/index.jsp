@@ -66,9 +66,7 @@
                 </div>
             </div>
             <div>
-                <button value=>Standard login</button><br>
-                <button name="override" value="challenge">Force login with challenge</button><br>
-                <button name="override" value="deny">Force login with deny</button>
+                <button value=>Login</button><br>
             </div>
         </form>
         <div>

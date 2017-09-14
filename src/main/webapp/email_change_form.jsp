@@ -12,7 +12,7 @@
                 _castle('setUser', {
                     id: '<c:out value = "${currentUser}"/>'
                 });
-//                secure mod on
+//                secure mode on
                 _castle('secure',
                     '<%= Castle.sdk().secureUserID(currentSessionUser.getId().toString()) %>');
             </script>

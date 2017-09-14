@@ -9,7 +9,8 @@ import javax.servlet.ServletContextListener;
 public class SetupListener implements ServletContextListener {
 
     /**
-     * Example of how to verify the SDK configuration during application initialization to avoid errors during request handling.
+     * Example of how to verify the SDK configuration during application initialization to avoid errors
+     * during request handling.
      *
      * @param sce
      */

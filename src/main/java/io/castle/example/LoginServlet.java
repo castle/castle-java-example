@@ -4,6 +4,8 @@ import io.castle.client.Castle;
 import io.castle.client.api.CastleApi;
 import io.castle.client.model.AuthenticateAction;
 import io.castle.client.model.Verdict;
+import io.castle.example.model.EmailProperties;
+import io.castle.example.model.FullNameTraits;
 import io.castle.example.model.TestUser;
 import io.castle.example.model.UserAuthenticationBackend;
 
@@ -25,56 +27,64 @@ public class LoginServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         CastleApi castleApi = Castle.sdk().onRequest(req);
 
-        String overrideString = req.getParameter("override");
-        AuthenticateAction override = null;
-
-        if (overrideString != null && overrideString.equals("challenge")) {
-            override = AuthenticateAction.CHALLENGE;
-        } else if (overrideString != null && overrideString.equals("deny")) {
-            override = AuthenticateAction.DENY;
-        }
-
         String username = req.getParameter("username");
         String password = req.getParameter("password");
 
         HttpSession session = req.getSession(true);
 
         TestUser user = UserAuthenticationBackend.findUser(username);
+        EmailProperties email = new EmailProperties();
+
         if (user != null && user.getPassword().compareTo(password) == 0) {
             String id = user.getId().toString();
-            Verdict verdict = castleApi.authenticate("$login.succeeded", id);
-            if (override != null) {
-                verdict.setAction(override);
-                LOGGER.info("The result of the Castle API authenticate call has been overridden to: "
-                        + override.toString());
-            }
+            email.setEmail(user.getLogin());
+
+            FullNameTraits fullName = new FullNameTraits();
+            fullName.setUsername(user.getUsername());
+            fullName.setLastname(user.getLastname());
+
+            Verdict verdict = castleApi.authenticate(
+                    "$login.succeeded",
+                    id,
+                    email,
+                    fullName
+            );
+
             switch (verdict.getAction()) {
                 case DENY: {
-                    castleApi.track("$login.failed", id, user);
+                    castleApi.track("$login.failed", id, email);
                     session.invalidate();
                     resp.sendRedirect("authentication_error.jsp");
                 }
                 break;
                 case ALLOW: {
-                    castleApi.track("$login.succeeded", id);
+                    castleApi.track("$login.succeeded", id, email);
                     session.setAttribute("currentSessionUser", user);
                     resp.sendRedirect("/");
                 }
                 break;
                 case CHALLENGE: {
-                    castleApi.track("$challenge.requested", id, user);
+                    castleApi.track("$challenge.requested", id, email);
                     session.setAttribute("challengedUser", user);
                     resp.sendRedirect("challenge.jsp");
                 }
                 break;
             }
-        } else
-
-        {
+        } else {
             if (user != null) {
-                castleApi.track("$login.failed", user.getId().toString());
+                email.setEmail(user.getLogin());
+                castleApi.track(
+                        "$login.failed",
+                        user.getId().toString(),
+                        email
+                );
             } else {
-                castleApi.track("$login.failed");
+                email.setEmail(username);
+                castleApi.track(
+                        "$login.failed",
+                        null,
+                        email
+                );
             }
             session.invalidate();
             resp.sendRedirect("authentication_error.jsp");
