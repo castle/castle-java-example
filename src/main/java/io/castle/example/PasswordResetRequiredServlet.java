@@ -31,6 +31,7 @@ public class PasswordResetRequiredServlet extends HttpServlet {
             castleApi.track(
                     "$password_reset_request.succeeded",
                     user.getId().toString(),
+                    null,
                     email
             );
             session.setAttribute("passwordResetUser", user);
@@ -39,6 +40,7 @@ public class PasswordResetRequiredServlet extends HttpServlet {
             email.setEmail(login);
             castleApi.track(
                     "$password_reset_request.failed",
+                    null,
                     null,
                     email
                     );

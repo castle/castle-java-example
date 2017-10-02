@@ -27,7 +27,13 @@
         <dependency>
             <groupId>io.castle</groupId>
             <artifactId>castle-java</artifactId>
-            <version>1.0.1-SNAPSHOT</version>
+            <version>1.0.1</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.squareup.okhttp3</groupId>
+                    <artifactId>mockwebserver</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
     </dependencies>
 

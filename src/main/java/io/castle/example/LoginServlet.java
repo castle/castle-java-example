@@ -52,19 +52,19 @@ public class LoginServlet extends HttpServlet {
 
             switch (verdict.getAction()) {
                 case DENY: {
-                    castleApi.track("$login.failed", id, email);
+                    castleApi.track("$login.failed", id, null,email);
                     session.invalidate();
                     resp.sendRedirect("authentication_error.jsp");
                 }
                 break;
                 case ALLOW: {
-                    castleApi.track("$login.succeeded", id, email);
+                    castleApi.track("$login.succeeded", id, null,email);
                     session.setAttribute("currentSessionUser", user);
                     resp.sendRedirect("/");
                 }
                 break;
                 case CHALLENGE: {
-                    castleApi.track("$challenge.requested", id, email);
+                    castleApi.track("$challenge.requested", id, null,email);
                     session.setAttribute("challengedUser", user);
                     resp.sendRedirect("challenge.jsp");
                 }
@@ -76,12 +76,14 @@ public class LoginServlet extends HttpServlet {
                 castleApi.track(
                         "$login.failed",
                         user.getId().toString(),
+                        null,
                         email
                 );
             } else {
                 email.setEmail(username);
                 castleApi.track(
                         "$login.failed",
+                        null,
                         null,
                         email
                 );
