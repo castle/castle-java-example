@@ -52,13 +52,11 @@ public class LoginServlet extends HttpServlet {
 
             switch (verdict.getAction()) {
                 case DENY: {
-                    castleApi.track("$login.failed", id, email);
                     session.invalidate();
                     resp.sendRedirect("authentication_error.jsp");
                 }
                 break;
                 case ALLOW: {
-                    castleApi.track("$login.succeeded", id, email);
                     session.setAttribute("currentSessionUser", user);
                     resp.sendRedirect("/");
                 }
