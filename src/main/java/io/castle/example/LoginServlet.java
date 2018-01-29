@@ -4,8 +4,6 @@ import io.castle.client.Castle;
 import io.castle.client.api.CastleApi;
 import io.castle.client.model.AuthenticateAction;
 import io.castle.client.model.Verdict;
-import io.castle.example.model.EmailProperties;
-import io.castle.example.model.FullNameTraits;
 import io.castle.example.model.TestUser;
 import io.castle.example.model.UserAuthenticationBackend;
 
@@ -15,6 +13,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import com.google.common.collect.ImmutableMap;
+
 import java.io.IOException;
 import java.util.logging.Logger;
 
@@ -33,21 +34,24 @@ public class LoginServlet extends HttpServlet {
         HttpSession session = req.getSession(true);
 
         TestUser user = UserAuthenticationBackend.findUser(username);
-        EmailProperties email = new EmailProperties();
 
         if (user != null && user.getPassword().compareTo(password) == 0) {
             String id = user.getId().toString();
-            email.setEmail(user.getLogin());
-
-            FullNameTraits fullName = new FullNameTraits();
-            fullName.setUsername(user.getUsername());
-            fullName.setLastname(user.getLastname());
+            ImmutableMap properties = ImmutableMap.builder()
+                    .put("premium", true)
+                    .put("balance", 500)
+                    .build();
+            
+            ImmutableMap traits = ImmutableMap.builder()
+                    .put("email", user.getLogin())
+                    .put("name", user.getLastname())
+                    .build();
 
             Verdict verdict = castleApi.authenticate(
                     "$login.succeeded",
                     id,
-                    email,
-                    fullName
+                    properties,
+                    traits
             );
 
             switch (verdict.getAction()) {
@@ -62,7 +66,7 @@ public class LoginServlet extends HttpServlet {
                 }
                 break;
                 case CHALLENGE: {
-                    castleApi.track("$challenge.requested", id, email);
+                    castleApi.track("$challenge.requested", id);
                     session.setAttribute("challengedUser", user);
                     resp.sendRedirect("challenge.jsp");
                 }
@@ -70,18 +74,23 @@ public class LoginServlet extends HttpServlet {
             }
         } else {
             if (user != null) {
-                email.setEmail(user.getLogin());
+                ImmutableMap properties = ImmutableMap.builder()
+                        .put("email", user.getLogin())
+                        .build();
+                
                 castleApi.track(
                         "$login.failed",
                         user.getId().toString(),
-                        email
+                        properties
                 );
             } else {
-                email.setEmail(username);
+                ImmutableMap properties = ImmutableMap.builder()
+                        .put("email", username)
+                        .build();
                 castleApi.track(
                         "$login.failed",
                         null,
-                        email
+                        properties
                 );
             }
             session.invalidate();

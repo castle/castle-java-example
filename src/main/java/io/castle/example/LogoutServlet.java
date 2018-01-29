@@ -2,7 +2,6 @@ package io.castle.example;
 
 import io.castle.client.Castle;
 import io.castle.client.api.CastleApi;
-import io.castle.example.model.CustomProperties;
 import io.castle.example.model.TestUser;
 
 import javax.servlet.ServletException;
@@ -11,6 +10,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import com.google.common.collect.ImmutableMap;
+
 import java.io.IOException;
 
 @WebServlet("/logout")
@@ -22,9 +24,8 @@ public class LogoutServlet extends HttpServlet {
         Object userObject = session.getAttribute("currentSessionUser");
         TestUser user = (TestUser) userObject;
 
-        CustomProperties customExample = new CustomProperties();
-        customExample.setExampleValue("valueToSend");
-        castleApi.track("$logout.succeeded", user.getId().toString(), customExample);
+
+        castleApi.track("$logout.succeeded", user.getId().toString());
         session.invalidate();
         resp.sendRedirect("logout_success.jsp");
     }
