@@ -43,6 +43,7 @@ public class PasswordResetRequiredServlet extends HttpServlet {
             castleApi.track(
                     "$password_reset_request.failed",
                     null,
+                    null,
                     properties
                     );
             session.invalidate();

@@ -81,6 +81,7 @@ public class LoginServlet extends HttpServlet {
                 castleApi.track(
                         "$login.failed",
                         user.getId().toString(),
+                        null,
                         properties
                 );
             } else {
@@ -89,6 +90,7 @@ public class LoginServlet extends HttpServlet {
                         .build();
                 castleApi.track(
                         "$login.failed",
+                        null,
                         null,
                         properties
                 );
