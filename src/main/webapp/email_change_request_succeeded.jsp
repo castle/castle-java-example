@@ -14,7 +14,7 @@
         });
 //        seure mode on
         _castle('secure',
-            '<%= Castle.sdk().secureUserID(currentSessionUser.getId().toString()) %>');
+            '<%= Castle.instance().secureUserID(currentSessionUser.getId().toString()) %>');
         </script>
     <title>Email Update</title>
 </head>

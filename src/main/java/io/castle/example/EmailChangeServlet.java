@@ -24,7 +24,7 @@ public class EmailChangeServlet extends HttpServlet {
         Object currentSessionUserObject = session.getAttribute("currentSessionUser");
 
         if (!session.isNew() && currentSessionUserObject != null) {
-            CastleApi castleApi = Castle.sdk().onRequest(req);
+            CastleApi castleApi = Castle.instance().onRequest(req);
             TestUser currentSessionUser = (TestUser) currentSessionUserObject;
             Boolean shouldEmailChange = Boolean.valueOf(req.getParameter("should_email_change"));
             Object requestedEmailObject = session.getAttribute("requestedEmail");

@@ -19,7 +19,7 @@ import java.io.IOException;
 public class LogoutServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        CastleApi castleApi = Castle.sdk().onRequest(req);
+        CastleApi castleApi = Castle.instance().onRequest(req);
         HttpSession session = req.getSession(true);
         Object userObject = session.getAttribute("currentSessionUser");
         TestUser user = (TestUser) userObject;

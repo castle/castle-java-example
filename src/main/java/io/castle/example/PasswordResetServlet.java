@@ -22,7 +22,7 @@ public class PasswordResetServlet extends HttpServlet {
         HttpSession session = req.getSession();
         Object passwordResetUserObject = session.getAttribute("passwordResetUser");
         if (!session.isNew() && passwordResetUserObject != null) {
-            CastleApi castleApi = Castle.sdk().onRequest(req);
+            CastleApi castleApi = Castle.instance().onRequest(req);
             TestUser passwordResetUser = (TestUser) passwordResetUserObject;
             Boolean shouldPasswordReset = Boolean.valueOf(req.getParameter("password_reset"));
             String newPassword = req.getParameter("new_password");

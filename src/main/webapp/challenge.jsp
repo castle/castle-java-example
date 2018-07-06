@@ -11,7 +11,7 @@
             id: '<c:out value = "${currentUser}"/>'
         });
         _castle('secure',
-            '<%= Castle.sdk().secureUserID(challengedUser.getId().toString()) %>');
+            '<%= Castle.instance().secureUserID(challengedUser.getId().toString()) %>');
     </script>
     <title>Authentication Challenge</title>
 </head>

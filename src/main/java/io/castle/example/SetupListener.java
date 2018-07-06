@@ -16,7 +16,8 @@ public class SetupListener implements ServletContextListener {
      */
     public void contextInitialized(ServletContextEvent sce) {
         try {
-            Castle.verifySdkConfigurationAndInitialize();
+            Castle castle = Castle.verifySdkConfigurationAndInitialize();
+            Castle.setSingletonInstance(castle);
         } catch (CastleSdkConfigurationException e) {
             //The sdk configuration is incorrect. We recommend to shutdown the application by throwing a runtime exception
             throw new IllegalStateException("The Castle SDK configuration is not correct", e);

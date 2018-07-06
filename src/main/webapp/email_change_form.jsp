@@ -14,7 +14,7 @@
                 });
 //                secure mode on
                 _castle('secure',
-                    '<%= Castle.sdk().secureUserID(currentSessionUser.getId().toString()) %>');
+                    '<%= Castle.instance().secureUserID(currentSessionUser.getId().toString()) %>');
             </script>
             <title>Update Your Email Account</title>
         </head>

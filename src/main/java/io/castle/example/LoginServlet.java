@@ -26,7 +26,7 @@ public class LoginServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        CastleApi castleApi = Castle.sdk().onRequest(req);
+        CastleApi castleApi = Castle.instance().onRequest(req);
 
         String username = req.getParameter("username");
         String password = req.getParameter("password");
