@@ -22,7 +22,7 @@ public class EmailChangeRequestServlet extends HttpServlet {
         HttpSession session = req.getSession();
         Object currentSessionUserObject = session.getAttribute("currentSessionUser");
         if (!session.isNew() && currentSessionUserObject != null) {
-            CastleApi castleApi = Castle.sdk().onRequest(req);
+            CastleApi castleApi = Castle.instance().onRequest(req);
             TestUser currentSessionUser = (TestUser) currentSessionUserObject;
             String userId = currentSessionUser.getId().toString();
             castleApi.track("$email_change.requested", userId);

@@ -15,7 +15,7 @@ public class ChallengeServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        CastleApi castleApi = Castle.sdk().onRequest(req);
+        CastleApi castleApi = Castle.instance().onRequest(req);
         HttpSession session = req.getSession(true);
         if (session.isNew()) {
             resp.sendRedirect("authentication_error.jsp");

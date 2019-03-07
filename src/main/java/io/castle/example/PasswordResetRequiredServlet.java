@@ -24,7 +24,7 @@ public class PasswordResetRequiredServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
 
-        CastleApi castleApi = Castle.sdk().onRequest(req);
+        CastleApi castleApi = Castle.instance().onRequest(req);
         String login = req.getParameter("login");
         TestUser user = UserAuthenticationBackend.findUser(login);
 
