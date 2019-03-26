@@ -1,5 +1,7 @@
 # Castle Java Example
 
+[![CircleCI](https://circleci.com/gh/castle/castle-java-example.svg?style=svg)](https://circleci.com/gh/castle/castle-java-example)
+
 This is an example of integrating Castle with a standard Java web application.
 
 Prerequisites
