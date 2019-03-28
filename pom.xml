@@ -4,7 +4,7 @@
     <groupId>io.castle.example</groupId>
     <artifactId>castle-example</artifactId>
     <packaging>war</packaging>
-    <version>1.3.0</version>
+    <version>1.4.0</version>
     <name>Castle Java JDK Example</name>
     <url>https://github.com/castle/castle-java-example</url>
     <dependencies>
