@@ -4,9 +4,9 @@ import io.castle.client.Castle;
 import io.castle.client.api.CastleApi;
 import io.castle.example.model.TestUser;
 
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.*;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.*;
 import java.io.IOException;
 
 
