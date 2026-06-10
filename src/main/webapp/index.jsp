@@ -32,6 +32,15 @@
             <a href="password_change_form.jsp">Change your password</a>
         </div>
         <div>
+            <h3>API demos</h3>
+            <ul>
+                <li><a href="lists-demo">Lists &amp; list items API</a></li>
+                <li><a href="events-demo">Events API</a></li>
+                <li><a href="privacy-demo?userId=<c:out value='${currentUser}'/>">Privacy data request</a></li>
+                <li><a href="webhooks">Received webhooks</a></li>
+            </ul>
+        </div>
+        <div>
             <form action="logout" method="post">
                 <input type="submit" value="Logout"/>
             </form>
@@ -71,6 +80,15 @@
         </form>
         <div>
             <a href="forgot_password.jsp">Forgot your password?</a>
+        </div>
+        <div>
+            <h3>API demos</h3>
+            <ul>
+                <li><a href="lists-demo">Lists &amp; list items API</a></li>
+                <li><a href="events-demo">Events API</a></li>
+                <li><a href="privacy-demo">Privacy data request</a></li>
+                <li><a href="webhooks">Received webhooks</a></li>
+            </ul>
         </div>
         <div>
             <h2>Test data</h2>
