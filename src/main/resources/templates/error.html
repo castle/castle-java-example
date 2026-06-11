@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{base}">
+
+<body>
+
+<div layout:fragment="content">
+    <section class="hero">
+        <span class="tag">404</span>
+        <h1 class="text-[2.2rem] mt-3" th:text="${message} ?: 'Page not found'">Page not found</h1>
+        <p class="text-[1.15rem] text-muted">Sorry, we couldn't load that URL.</p>
+        <div class="btn-row justify-center">
+            <a class="feature inline-block" href="/">Back to demos</a>
+        </div>
+    </section>
+</div>
+
+</body>
+
+</html>

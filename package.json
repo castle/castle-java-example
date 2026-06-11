@@ -1,0 +1,21 @@
+{
+  "name": "castle-java-example",
+  "version": "2.0.0",
+  "description": "A small Spring Boot app demonstrating key Castle workflows (sign up, login, account, password reset, lists, privacy, webhooks) on top of the Castle Java SDK.",
+  "private": false,
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/castle/castle-java-example.git"
+  },
+  "license": "MIT",
+  "scripts": {
+    "build:css": "tailwindcss -i ./src/tailwind.css -o ./static/styles.css --minify",
+    "watch:css": "tailwindcss -i ./src/tailwind.css -o ./static/styles.css --watch"
+  },
+  "dependencies": {
+    "@castleio/castle-js": "^2.8.4"
+  },
+  "devDependencies": {
+    "tailwindcss": "^3.4.19"
+  }
+}

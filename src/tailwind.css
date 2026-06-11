@@ -1,0 +1,244 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply min-h-screen bg-bg font-sans text-[15px] leading-relaxed text-ink antialiased;
+    background-image: radial-gradient(
+      1200px 600px at 80% -10%,
+      rgba(54, 94, 237, 0.12),
+      transparent 60%
+    );
+  }
+
+  a {
+    @apply text-accent no-underline hover:underline;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply font-semibold leading-tight;
+  }
+
+  p {
+    @apply mb-3;
+  }
+
+  code {
+    @apply rounded border border-border bg-surface-2 px-1.5 py-0.5 font-mono text-[0.86em];
+  }
+}
+
+/*
+ * Component classes. Authored outside @layer so they are always emitted even
+ * when the selector only appears in JS-generated markup (badge/json).
+ */
+
+.navbar {
+  @apply sticky top-0 z-50 flex flex-wrap items-center gap-6 border-b border-border px-6 py-3.5;
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(10px);
+}
+
+.brand {
+  @apply flex items-center gap-2 text-[1.05rem] font-bold text-ink hover:no-underline;
+}
+
+.brand-logo {
+  @apply h-[1.4rem] w-[1.4rem] shrink-0 text-accent;
+  filter: drop-shadow(0 0 8px rgba(54, 94, 237, 0.35));
+}
+
+.brand-logo-lg {
+  @apply h-12 w-12;
+}
+
+.nav-links {
+  @apply ml-auto flex flex-wrap items-center gap-5;
+}
+
+.nav-links a {
+  @apply text-[0.92rem] text-muted hover:text-ink hover:no-underline;
+}
+
+.tag {
+  @apply rounded-full border border-accent/40 bg-accent/10 px-2 py-0.5 text-xs font-semibold text-accent;
+}
+
+.container-page {
+  @apply mx-auto max-w-[1120px] px-6 pb-16 pt-8;
+}
+
+.card {
+  @apply rounded-xl border border-border bg-surface p-6 shadow-card;
+}
+
+.eyebrow {
+  @apply mb-1.5 text-xs font-bold uppercase tracking-wider text-muted;
+}
+
+.hero {
+  @apply px-4 py-12 text-center;
+}
+
+.feature {
+  @apply block rounded-xl border border-border bg-surface p-5 text-left transition hover:-translate-y-0.5 hover:border-accent hover:no-underline;
+}
+
+.feature h3 {
+  @apply mb-1 text-ink;
+}
+
+.feature p {
+  @apply m-0 text-sm text-muted;
+}
+
+.field {
+  @apply mb-3.5;
+}
+
+.field label {
+  @apply mb-1.5 block text-[0.82rem] font-semibold text-muted;
+}
+
+.input {
+  @apply w-full rounded-lg border border-border bg-bg-soft px-3 py-2.5 font-sans text-[0.95rem] text-ink transition;
+}
+
+.input:focus {
+  @apply border-accent outline-none;
+  box-shadow: 0 0 0 3px rgba(54, 94, 237, 0.14);
+}
+
+.checkbox {
+  @apply mt-1 flex items-center gap-2 text-[0.85rem] text-muted;
+}
+
+.checkbox input {
+  @apply m-0 w-auto;
+}
+
+.form-links {
+  @apply mt-4 flex justify-between gap-4 text-[0.85rem];
+}
+
+.btn {
+  @apply cursor-pointer rounded-lg border border-border bg-surface-2 px-4 py-2.5 font-sans text-[0.92rem] font-semibold text-ink transition hover:border-accent active:translate-y-px;
+}
+
+.btn-primary {
+  @apply border-accent bg-accent text-white hover:bg-accent-hover;
+}
+
+.btn-ghost {
+  @apply bg-transparent;
+}
+
+.btn-row {
+  @apply mt-4 flex flex-wrap gap-2.5;
+}
+
+.meta-list {
+  @apply m-0 list-none p-0;
+}
+
+.meta-list li {
+  @apply flex justify-between gap-4 border-b border-border-soft py-2 text-[0.9rem] last:border-b-0;
+}
+
+.meta-list .k {
+  @apply text-muted;
+}
+
+.meta-list .v {
+  @apply break-all text-right font-mono text-ink;
+}
+
+.result-block {
+  @apply mt-4;
+}
+
+.result-block .label {
+  @apply mb-1.5 text-[0.78rem] font-bold uppercase tracking-wide text-muted;
+}
+
+pre.json {
+  @apply m-0 overflow-auto rounded-lg border border-border bg-bg-soft p-4 font-mono text-[0.85rem] leading-normal;
+}
+
+.json .k {
+  color: #0550ae;
+}
+
+.json .s {
+  color: #0a7d33;
+}
+
+.json .n {
+  color: #b25000;
+}
+
+.json .b {
+  @apply text-accent;
+}
+
+.json .z {
+  @apply text-muted;
+}
+
+.badge {
+  @apply inline-block rounded-full border border-border px-2 py-0.5 text-xs font-semibold;
+}
+
+.badge.endpoint {
+  @apply border-accent/40 bg-accent/10 font-mono text-accent;
+}
+
+.verdict {
+  @apply flex items-center gap-3.5 rounded-lg border border-border bg-surface-2 px-4 py-2.5;
+}
+
+.verdict-action {
+  @apply rounded-full px-2.5 py-1 text-[0.85rem] font-bold uppercase tracking-wider;
+}
+
+.verdict-score {
+  @apply text-[0.9rem] text-muted;
+}
+
+.verdict-allow {
+  @apply border-success/40 bg-success/10;
+}
+
+.verdict-allow .verdict-action {
+  @apply bg-success;
+  color: #0b1020;
+}
+
+.verdict-challenge {
+  @apply border-challenge/40 bg-challenge/10;
+}
+
+.verdict-challenge .verdict-action {
+  @apply bg-challenge;
+  color: #0b1020;
+}
+
+.verdict-deny {
+  @apply border-danger/40 bg-danger/10;
+}
+
+.verdict-deny .verdict-action {
+  @apply bg-danger text-white;
+}
+
+.signals {
+  @apply mt-2.5 flex flex-wrap gap-1.5;
+}
+
+.signals .chip {
+  @apply rounded-full border border-border bg-bg-soft px-2 py-0.5 font-mono text-xs text-muted;
+}
