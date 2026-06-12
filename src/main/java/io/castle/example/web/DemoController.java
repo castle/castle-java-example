@@ -313,6 +313,43 @@ public class DemoController {
         return out;
     }
 
+    // --- Events API ----------------------------------------------------------
+
+    @PostMapping("/events_demo")
+    public Map<String, Object> eventsDemo(@RequestBody(required = false) Map<String, Object> body) {
+        Map<String, Object> b = orEmpty(body);
+        String type = orDefault(str(b, "type"), "$login");
+
+        List<Map<String, Object>> steps = new ArrayList<>();
+        CastleApi client = client();
+
+        Map<String, Object> schemaStep = new LinkedHashMap<>();
+        schemaStep.put("api_endpoint", "events/schema");
+        try {
+            schemaStep.put("result", CastleSupport.toJava(client.eventsSchema(), mapper));
+        } catch (Exception e) {
+            schemaStep.put("result", CastleSupport.error(e.getMessage()));
+        }
+        steps.add(schemaStep);
+
+        Map<String, Object> queryPayload = new LinkedHashMap<>();
+        queryPayload.put("type", type);
+
+        Map<String, Object> queryStep = new LinkedHashMap<>();
+        queryStep.put("api_endpoint", "events/query");
+        queryStep.put("payload_to_castle", queryPayload);
+        try {
+            queryStep.put("result", CastleSupport.toJava(client.queryEvents(toImmutable(queryPayload)), mapper));
+        } catch (Exception e) {
+            queryStep.put("result", CastleSupport.error(e.getMessage()));
+        }
+        steps.add(queryStep);
+
+        Map<String, Object> out = new LinkedHashMap<>();
+        out.put("steps", steps);
+        return out;
+    }
+
     // --- Webhook receiver ----------------------------------------------------
 
     @PostMapping(value = "/webhooks/castle")

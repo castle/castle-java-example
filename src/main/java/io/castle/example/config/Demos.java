@@ -23,6 +23,8 @@ public final class Demos {
                     "Create and fetch lists with the Lists API.", null),
             new Demo("privacy", "privacy",
                     "Request or delete a user's data with the Privacy API.", null),
+            new Demo("events", "events",
+                    "Fetch the event schema and query events with the Events API.", null),
             new Demo("webhooks", "webhooks",
                     "Verify and inspect incoming Castle webhooks.", null));
 
