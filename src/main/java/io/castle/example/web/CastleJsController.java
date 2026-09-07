@@ -10,12 +10,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.List;
 
 /**
- * Serves the Castle browser SDK from the npm install. 2.x ships
- * castle.browser.js; 3.x ships castle.umd.js. The HTML always requests
- * castle.umd.js.
+ * Serves the Castle UMD build from the npm install.
  */
 @Controller
 public class CastleJsController {
@@ -25,28 +22,12 @@ public class CastleJsController {
 
     @GetMapping("/vendor/castle-js/{filename}")
     public ResponseEntity<Resource> castleJs(@PathVariable String filename) {
-        Path file = resolve(filename);
-        if (file == null) {
+        Path file = DIST.resolve(filename).normalize();
+        if (!file.startsWith(DIST) || !Files.isRegularFile(file)) {
             return ResponseEntity.notFound().build();
         }
         return ResponseEntity.ok()
                 .contentType(MediaType.parseMediaType("application/javascript"))
                 .body(new FileSystemResource(file));
-    }
-
-    static Path resolve(String filename) {
-        List<String> names = switch (filename) {
-            case "castle.umd.js" -> List.of("castle.umd.js", "castle.browser.js");
-            case "castle.browser.js" -> List.of("castle.browser.js", "castle.umd.js");
-            default -> List.of(filename);
-        };
-        for (String name : names) {
-            Path candidate = DIST.resolve(name).normalize();
-            if (!candidate.startsWith(DIST) || !Files.isRegularFile(candidate)) {
-                continue;
-            }
-            return candidate;
-        }
-        return null;
     }
 }

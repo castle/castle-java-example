@@ -10,7 +10,8 @@
   "license": "MIT",
   "scripts": {
     "build:css": "tailwindcss -i ./src/tailwind.css -o ./static/styles.css --minify",
-    "watch:css": "tailwindcss -i ./src/tailwind.css -o ./static/styles.css --watch"
+    "watch:css": "tailwindcss -i ./src/tailwind.css -o ./static/styles.css --watch",
+    "postinstall": "node scripts/ensure-castle-umd.js"
   },
   "dependencies": {
     "@castleio/castle-js": "^2.8.5"
