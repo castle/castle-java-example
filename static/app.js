@@ -17,9 +17,14 @@ async function postJSON(url, data) {
 
 // Resolve a Castle request token, falling back gracefully if the browser SDK
 // is unavailable (e.g. no publishable key configured).
+function castleClient() {
+  return window.__castle || window.Castle;
+}
+
 function withRequestToken(callback) {
-  if (window.Castle && typeof Castle.createRequestToken === "function") {
-    Castle.createRequestToken()
+  var sdk = castleClient();
+  if (sdk && typeof sdk.createRequestToken === "function") {
+    sdk.createRequestToken()
       .then(callback)
       .catch(function (err) {
         console.error("Castle.createRequestToken failed", err);

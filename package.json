@@ -13,7 +13,7 @@
     "watch:css": "tailwindcss -i ./src/tailwind.css -o ./static/styles.css --watch"
   },
   "dependencies": {
-    "@castleio/castle-js": "^2.8.4"
+    "@castleio/castle-js": "^2.8.5"
   },
   "devDependencies": {
     "tailwindcss": "^3.4.19"

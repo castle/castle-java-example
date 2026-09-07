@@ -12,8 +12,10 @@ import javax.crypto.spec.SecretKeySpec;
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 
+import static org.hamcrest.Matchers.containsString;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
@@ -33,7 +35,15 @@ class CastleExampleApplicationTests {
 
     @Test
     void homePageRenders() throws Exception {
-        mockMvc.perform(get("/")).andExpect(status().isOk());
+        mockMvc.perform(get("/"))
+                .andExpect(status().isOk())
+                .andExpect(content().string(containsString("/vendor/castle-js/castle.umd.js")));
+    }
+
+    @Test
+    void castleUmdIsServedFromNpm() throws Exception {
+        mockMvc.perform(get("/vendor/castle-js/castle.umd.js"))
+                .andExpect(status().isOk());
     }
 
     @Test

@@ -13,10 +13,18 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link href="/static/styles.css" rel="stylesheet">
 
-    <script src="/vendor/castle-js/castle.browser.js"></script>
+    <script>
+        if (!window.Castle) {
+            window.exports = window.exports || {};
+            window.module = window.module || { exports: window.exports };
+            window.Castle = window.module.exports;
+        }
+    </script>
+    <script src="/vendor/castle-js/castle.umd.js"></script>
     <script th:inline="javascript">
+        window.Castle = window.Castle || (window.module && window.module.exports) || window["@castleio/castle-js"];
         if (window.Castle && /*[[${castle_pk}]]*/ "") {
-            Castle.configure({ pk: /*[[${castle_pk}]]*/ "" });
+            window.__castle = Castle.configure({ pk: /*[[${castle_pk}]]*/ "" }) || window.Castle;
         }
     </script>
     <script src="/static/app.js" defer></script>
