@@ -33,7 +33,7 @@ jobs:
         uses: actions/checkout@v5
         with:
           repository: castle/castle-java
-          ref: develop
+          ref: modernize-3.0.0
           path: castle-java
 
       - name: Set up JDK ${{ matrix.java-version }}
@@ -47,4 +47,5 @@ jobs:
         run: mvn -B -ntp -f castle-java/pom.xml install -DskipTests -Dmaven.javadoc.skip=true
 
       - name: Build and test example
-        run: mvn -B -ntp -f example/pom.xml verify
+        working-directory: example
+        run: mvn -B -ntp verify
