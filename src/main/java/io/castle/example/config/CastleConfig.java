@@ -5,6 +5,7 @@ import io.castle.client.model.CastleSdkConfigurationException;
 import org.springframework.context.annotation.Configuration;
 
 import jakarta.annotation.PostConstruct;
+import jakarta.annotation.PreDestroy;
 
 /**
  * Initialises the Castle SDK singleton once, on startup. The API secret comes
@@ -36,5 +37,10 @@ public class CastleConfig {
         } catch (CastleSdkConfigurationException e) {
             throw new IllegalStateException("The Castle SDK configuration is not correct", e);
         }
+    }
+
+    @PreDestroy
+    public void shutdown() {
+        Castle.instance().close();
     }
 }

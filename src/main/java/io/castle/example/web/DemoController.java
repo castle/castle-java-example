@@ -186,7 +186,7 @@ public class DemoController {
 
         // A new password that differs from the current one is a successful reset.
         String status = password.equals(env.get("valid_password")) ? "$failed" : "$succeeded";
-        String type = "$password_reset";
+        String type = "$profile_reset";
 
         Map<String, Object> user = new LinkedHashMap<>();
         user.put("id", env.get("valid_user_id"));
@@ -263,8 +263,8 @@ public class DemoController {
             ListResponse created = client.createList(request);
             List<ListResponse> all = client.listAllLists();
             Map<String, Object> ok = new LinkedHashMap<>();
-            ok.put("created", mapper.convertValue(created, Object.class));
-            ok.put("all_lists", mapper.convertValue(all, Object.class));
+            ok.put("created", CastleSupport.toJava(created, mapper));
+            ok.put("all_lists", CastleSupport.toJava(all, mapper));
             result = ok;
         } catch (Exception e) {
             result = CastleSupport.error(e.getMessage());

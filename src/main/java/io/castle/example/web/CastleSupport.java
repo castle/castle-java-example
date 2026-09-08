@@ -2,6 +2,7 @@ package io.castle.example.web;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.collect.ImmutableMap;
+import com.google.gson.Gson;
 import io.castle.client.Castle;
 import io.castle.client.model.CastleResponse;
 
@@ -43,6 +44,17 @@ final class CastleSupport {
             return mapper.readValue(response.json().toString(), Object.class);
         } catch (Exception e) {
             return response.json().toString();
+        }
+    }
+
+    static Object toJava(Object value, ObjectMapper mapper) {
+        if (value == null) {
+            return null;
+        }
+        try {
+            return mapper.readValue(new Gson().toJson(value), Object.class);
+        } catch (Exception e) {
+            return String.valueOf(value);
         }
     }
 

@@ -18,7 +18,7 @@ public final class Demos {
             new Demo("account", "account",
                     "Update your profile, send a custom event, and log out.", null),
             new Demo("password_reset", "password reset",
-                    "Record a password-reset event with the non-blocking log endpoint.", null),
+                    "Record a password-reset event ($profile_reset) with the non-blocking log endpoint.", null),
             new Demo("lists", "lists",
                     "Create and fetch lists with the Lists API.", null),
             new Demo("privacy", "privacy",
