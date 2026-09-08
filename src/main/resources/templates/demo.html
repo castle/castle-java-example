@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{base}">
+
+<body>
+
+<div layout:fragment="content">
+
+    <th:block th:if="${home}">
+        <section class="hero">
+            <span class="tag">castle-java</span>
+            <h1 class="text-[2.2rem] mt-3">Castle workflows demo</h1>
+            <p class="text-[1.15rem] text-muted">A small Spring Boot app showing how to integrate the Castle Java SDK.</p>
+        </section>
+
+        <div class="grid gap-4 mt-8" style="grid-template-columns:repeat(auto-fit,minmax(210px,1fr));">
+            <a class="feature" th:each="d : ${demo_list}" th:href="@{|/${d.url}|}">
+                <h3 th:text="${d.friendlyName}">name</h3>
+                <p th:text="${d.blurb}">blurb</p>
+            </a>
+        </div>
+    </th:block>
+
+    <div th:unless="${home}" class="grid gap-6 items-start md:grid-cols-[1.3fr_1fr]">
+
+        <div>
+            <div class="card">
+                <div class="eyebrow">workflow</div>
+                <h2 class="text-[1.15rem]" th:text="${friendly_name}">workflow</h2>
+
+                <div id="ui">
+                    <div layout:fragment="ui"></div>
+                </div>
+
+                <div id="desc" class="text-muted" style="margin-top:1.2rem;">
+                    <div layout:fragment="desc"></div>
+                </div>
+
+                <th:block th:if="${wsd}">
+                    <hr class="my-5 border-border">
+                    <a th:href="${wsd}" target="_blank" rel="noopener">View the web sequence diagram &rarr;</a>
+                </th:block>
+            </div>
+
+            <div id="results-card" class="card hidden mt-6">
+                <div class="eyebrow">result</div>
+                <div id="results"></div>
+            </div>
+        </div>
+
+        <aside>
+            <div class="card">
+                <div class="eyebrow">session</div>
+                <ul class="meta-list">
+                    <li><span class="k">publishable key</span><span class="v" th:text="${castle_pk} ?: '—'">—</span></li>
+                    <li><span class="k">valid username</span><span class="v" th:text="${valid_username}">user</span></li>
+                    <li><span class="k">valid password</span><span class="v" th:text="${valid_password}">pw</span></li>
+                </ul>
+            </div>
+        </aside>
+
+    </div>
+
+</div>
+
+<th:block layout:fragment="scripts"></th:block>
+
+</body>
+
+</html>

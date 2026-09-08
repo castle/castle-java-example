@@ -1,0 +1,51 @@
+name: CI
+
+on:
+  push:
+    branches: [master, main]
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        java-version: ['17', '21', '25']
+    steps:
+      - name: Check out example
+        uses: actions/checkout@v5
+        with:
+          path: example
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: example/package-lock.json
+      - run: npm ci
+        working-directory: example
+
+      # castle-java 3.0.0 is not yet on Maven Central; build it from source and
+      # install it into the local repository so the example can resolve it.
+      - name: Check out castle-java SDK
+        uses: actions/checkout@v5
+        with:
+          repository: castle/castle-java
+          ref: modernize-3.0.0
+          path: castle-java
+
+      - name: Set up JDK ${{ matrix.java-version }}
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: ${{ matrix.java-version }}
+          cache: maven
+
+      - name: Install castle-java SDK
+        run: mvn -B -ntp -f castle-java/pom.xml install -DskipTests -Dmaven.javadoc.skip=true
+
+      - name: Build and test example
+        working-directory: example
+        run: mvn -B -ntp verify

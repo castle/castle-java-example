@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{demo}">
+
+<body>
+
+<th:block layout:fragment="ui">
+    <p>This page lists the most recent webhooks Castle has delivered to this app. Each one is signature-verified before it is stored.</p>
+
+    <div class="field">
+        <label>receiver endpoint</label>
+        <input class="input" type="text" th:value="${webhook_endpoint}" readonly onclick="this.select()">
+    </div>
+
+    <div class="btn-row">
+        <a class="btn" href="/webhooks">Refresh</a>
+    </div>
+
+    <th:block th:if="${!webhooks_received.isEmpty()}">
+        <div class="result-block mt-4" th:each="wh : ${webhooks_received}">
+            <div class="label">#<span th:text="${wh.id}">1</span> &middot; <span th:text="${wh.receivedAt}">time</span></div>
+            <pre class="whitespace-pre-wrap text-[0.8rem]" th:text="${wh.body}">{}</pre>
+        </div>
+    </th:block>
+    <p th:if="${webhooks_received.isEmpty()}" class="text-muted mt-4">No webhooks received yet.</p>
+</th:block>
+
+<th:block layout:fragment="desc">
+    <p>Point a webhook at <code th:text="${webhook_endpoint}">/webhooks/castle</code> from the Castle dashboard (Settings &rarr; Webhooks). Incoming requests are verified with <code>verifyWebhookSignature</code> against the <code>X-Castle-Signature</code> header; anything that fails verification gets a 404.</p>
+    <p>Because this demo runs on localhost, Castle needs a public tunnel (e.g. ngrok) to reach the receiver.</p>
+</th:block>
+
+</body>
+
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{demo}">
+
+<body>
+
+<th:block layout:fragment="ui">
+    <div class="field">
+        <label for="identifier">identifier</label>
+        <input class="input" type="text" id="identifier" th:value="${valid_username}">
+    </div>
+    <div class="field">
+        <label for="identifier_type">identifier type</label>
+        <input class="input" type="text" id="identifier_type" value="$email">
+    </div>
+    <div class="btn-row">
+        <button class="btn btn-primary" onclick="privacy('request')">Request user data</button>
+        <button class="btn" onclick="privacy('delete')">Delete user data</button>
+    </div>
+</th:block>
+
+<th:block layout:fragment="desc">
+    <p>The <strong>Privacy</strong> API helps you honor GDPR/CCPA requests via <code>requestUserData</code> and a delete call to the privacy endpoint.</p>
+    <p>A valid Castle API secret is required for these calls to succeed.</p>
+</th:block>
+
+<th:block layout:fragment="scripts">
+    <script>
+        function privacy(action) {
+            postJSON("/privacy_user_data", {
+                action: action,
+                identifier: document.getElementById("identifier").value,
+                identifier_type: document.getElementById("identifier_type").value,
+            }).then(renderCastleResponse);
+        }
+    </script>
+</th:block>
+
+</body>
+
+</html>

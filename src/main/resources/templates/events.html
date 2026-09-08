@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{demo}">
+
+<body>
+
+<th:block layout:fragment="ui">
+    <div class="field">
+        <label for="type">event type</label>
+        <input class="input" type="text" id="type" value="$login">
+    </div>
+    <div class="btn-row">
+        <button class="btn btn-primary" onclick="eventsDemo()">Fetch schema &amp; query events</button>
+    </div>
+</th:block>
+
+<th:block layout:fragment="desc">
+    <p>The <strong>Events</strong> API lets you inspect the event schema and query stored events. This demo calls <code>eventsSchema</code> and then <code>queryEvents</code> for the given type.</p>
+    <p>A valid Castle API secret is required for these calls to succeed.</p>
+</th:block>
+
+<th:block layout:fragment="scripts">
+    <script>
+        function eventsDemo() {
+            postJSON("/events_demo", {
+                type: document.getElementById("type").value,
+            }).then(function (data) {
+                renderCastleSteps(data.steps);
+            });
+        }
+    </script>
+</th:block>
+
+</body>
+
+</html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{demo}">
+
+<body>
+
+<th:block layout:fragment="ui">
+    <div class="field">
+        <label for="name">name</label>
+        <input class="input" type="text" id="name" value="demo-blocklist">
+    </div>
+    <div class="field">
+        <label for="color">color</label>
+        <input class="input" type="text" id="color" value="$red">
+    </div>
+    <div class="field">
+        <label for="primary_field">primary field</label>
+        <input class="input" type="text" id="primary_field" value="user.email">
+    </div>
+    <div class="btn-row">
+        <button class="btn btn-primary" onclick="createList()">Create list</button>
+    </div>
+</th:block>
+
+<th:block layout:fragment="desc">
+    <p>The <strong>Lists</strong> API lets you manage allow/block lists programmatically. This demo calls <code>createList</code> and then <code>getAllLists</code>.</p>
+    <p>A valid Castle API secret is required for this call to succeed.</p>
+</th:block>
+
+<th:block layout:fragment="scripts">
+    <script>
+        function createList() {
+            postJSON("/create_list", {
+                name: document.getElementById("name").value,
+                color: document.getElementById("color").value,
+                primary_field: document.getElementById("primary_field").value,
+            }).then(renderCastleResponse);
+        }
+    </script>
+</th:block>
+
+</body>
+
+</html>
