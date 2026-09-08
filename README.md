@@ -14,7 +14,7 @@ the backend, which calls Castle and acts on the verdict.
 - **sign up** – `$registration` to `filter` (anonymous, so the email goes in `params`): `$attempted` for a new email, `$failed` (resolved via `matching_user_id`) for an email that already exists
 - **login** – `$login` reusing one request token across two calls: `filter` `$attempted` first, then `risk` `$succeeded` on success or `filter` `$failed` (wrong password / unknown user)
 - **account** – post-login actions: profile update (`$profile_update` to `risk`), a custom event (`Castle.custom()`), and logout (`$logout` via the non-blocking `log` endpoint)
-- **password reset** – `$password_reset` via the non-blocking `log` endpoint
+- **password reset** – `$profile_reset` via the non-blocking `log` endpoint
 - **lists** – the Lists API (`createList`, `getAllLists`)
 - **privacy** – the Privacy API (`requestUserData` and a delete call to the privacy endpoint)
 - **webhooks** – incoming Castle webhooks are signature-verified with `verifyWebhookSignature` (against the `X-Castle-Signature` header) and the most recent payloads are listed
